@@ -459,6 +459,8 @@ Doc.prototype = {
           match = text.match(/^([^\s]*)\s+on\s+([\S\s]*)/);
           self.type = match[1];
           self.target = match[2];
+        } else if(atName == 'private') {
+          self.private = true
         } else {
           self[atName] = text;
         }
@@ -890,7 +892,7 @@ Doc.prototype = {
           }
           //filters out .IsProperty parameters from the method signature
           var signature = (method.param || []).filter(function(e) { return e.isProperty !== true; }).map(property('name'));
-          dom.h(method.shortName + '(' + signature.join(', ') + ')', method, function() {
+          dom.h((method.private === true ? '[p]' : '') + method.shortName + '(' + signature.join(', ') + ')', method, function() {
             dom.html(method.description);
             method.html_usage_parameters(dom);
             self.html_usage_this(dom);

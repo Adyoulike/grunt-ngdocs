@@ -137,6 +137,11 @@ DOM.prototype = {
       var classNameValue = this.currentHeaders[this.headingDepth - 1]
       if (/^(hide|close|collapse)$/.test(classNameValue)) classNameValue = '';
       className = {'class': classNameValue};
+      isPrivate = heading.indexOf('[p]') > -1;
+      if (isPrivate) {
+        heading = heading.replace('[p]', '');
+        anchor.class = 'is-private';
+      }
     }
     this.tag('h' + this.headingDepth, anchor, heading);
     if (content instanceof Array) {
